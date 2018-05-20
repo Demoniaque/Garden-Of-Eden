@@ -1,0 +1,23 @@
+[
+  {
+    "modid": "gardenofeden",
+    "name": "Garden Of Eden",
+    "description": "",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "Demoniaque",
+      "wiresegal",
+      "DanielDalton"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": [
+      "LibrarianLib",
+      "ForgeLin"
+    ]
+  }
+]
