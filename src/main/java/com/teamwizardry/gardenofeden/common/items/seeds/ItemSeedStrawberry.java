@@ -1,4 +1,4 @@
-package com.teamwizardry.gardenofeden.common.items;
+package com.teamwizardry.gardenofeden.common.items.seeds;
 
 import com.teamwizardry.gardenofeden.ModBlocks;
 import com.teamwizardry.librarianlib.features.base.item.ItemModSeed;
