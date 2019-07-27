@@ -17,6 +17,9 @@ version = modVersion
 group= modGroup
 archivesBaseName = modBaseName
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 minecraft {
     version = project.forgeVersion
     runDir = "run"
@@ -28,35 +31,47 @@ minecraft {
     // simply re-run your setup task after changing the mappings to update your workspace.
     mappings = project.mcpVersion
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+
+
+    clientJvmArgs = ["-Dfml.coreMods.load=com.teamwizardry.librarianlib.asm.LibLibCorePlugin"]
+    serverJvmArgs = ["-Dfml.coreMods.load=com.teamwizardry.librarianlib.asm.LibLibCorePlugin"]
 }
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
     maven { url = "http://maven.bluexin.be/repository/snapshots/" }
     maven { url = "http://dvs1.progwml6.com/files/maven" }
+    maven { url = "http://tehnut.info/maven" }
+    maven { url = "http://maven.tterrag.com/" }
+    maven { url = "http://maven.thiakil.com" }
 }
 
 dependencies {
-    compile "com.teamwizardry.librarianlib:librarianlib-1.12.2:$liblib_version-SNAPSHOT:deobf"
+    compile ("com.teamwizardry.librarianlib:librarianlib-1.12.2:feature-neogui-4.20-SNAPSHOT") {changing = true}
     deobfCompile "mezz.jei:jei_1.12:$jei_version:api"
     runtime "mezz.jei:jei_1.12:$jei_version"
 }
 
 processResources {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+    inputs.property 'mod_version', project.version
+    inputs.property 'mc_version', project.minecraft.version
 
-    // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
-        include "mcmod.info"
-
-        // replace version and mcversion
-        expand "version":project.version, "mcversion":project.minecraft.version
+        include 'mcmod.info', 'pack.mcmeta'
+        expand  'mod_version': project.version,
+                'mc_version': project.minecraft.version
     }
 
-    // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
-        exclude "mcmod.info"
+        exclude 'mcmod.info', 'pack.mcmeta'
+    }
+}
+
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = compileJava.destinationDir
+        testOutputDir = compileTestJava.destinationDir
     }
 }
